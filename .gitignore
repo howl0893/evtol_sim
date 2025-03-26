@@ -1,0 +1,12 @@
+# Ignore build directory and its contents
+build/
+
+# Ignore CMake generated files
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+
+# Ignore compiled binaries
+*.o
+evtol_sim
