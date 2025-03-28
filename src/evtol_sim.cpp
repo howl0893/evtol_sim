@@ -1,4 +1,3 @@
-// imports
 #include <iostream>
 #include <vector>
 #include <random>
@@ -81,8 +80,8 @@ public:
         return currentBattery > 0;
     }
 
-    void charge(double time) {
-        chargeTimeTotal += time;
+    void charge(double actualChargeTime) {
+        chargeTimeTotal += actualChargeTime;  // Use the actual time spent charging
         chargeCount++;
         currentBattery = type->getRange() * type->getEnergyUse();
     }
@@ -108,6 +107,7 @@ private:
     vector<shared_ptr<Vehicle>> vehicles;
     queue<shared_ptr<Vehicle>> chargeQueue;
     vector<shared_ptr<Vehicle>> chargers;
+    vector<double> chargeStartTimes;  // Track when each vehicle started charging
     const int TOTAL_VEHICLES = 20;
     const int TOTAL_CHARGERS = 3;
     const double SIM_TIME = 3.0;  // hours
@@ -122,6 +122,7 @@ public:
         vehicleTypes.push_back(make_shared<VehicleType>("Echo", 30, 150, 0.3, 5.8, 2, 0.61));
         
         chargers.resize(TOTAL_CHARGERS, nullptr);
+        chargeStartTimes.resize(TOTAL_CHARGERS, 0.0);  // Initialize start times to 0
     }
 
     void initializeVehicles(mt19937& gen) {
@@ -147,16 +148,32 @@ public:
 
             // Process chargers
             for (int i = 0; i < TOTAL_CHARGERS; i++) {
-                if (chargers[i] && currentTime >= chargers[i]->getAvgChargeTime()) {
-                    chargers[i] = nullptr;
+                if (chargers[i]) {
+                    double chargeDuration = vehicleTypes[i]->getChargeTime();
+                    if (currentTime >= chargeStartTimes[i] + chargeDuration) {
+                        // Charging is complete; calculate actual time spent
+                        double actualChargeTime = currentTime - chargeStartTimes[i];
+                        chargers[i]->charge(actualChargeTime);
+                        chargers[i] = nullptr;  // Free the charger
+                    }
                 }
+
                 if (!chargers[i] && !chargeQueue.empty()) {
                     chargers[i] = chargeQueue.front();
-                    chargers[i]->charge(vehicleTypes[i]->getChargeTime());
+                    chargeStartTimes[i] = currentTime;  // Record start time
                     chargeQueue.pop();
                 }
             }
             currentTime += 0.1; // Time step
+        }
+
+        // Finalize any ongoing charges at the end of simulation
+        for (int i = 0; i < TOTAL_CHARGERS; i++) {
+            if (chargers[i]) {
+                double actualChargeTime = SIM_TIME - chargeStartTimes[i];
+                chargers[i]->charge(actualChargeTime);
+                chargers[i] = nullptr;
+            }
         }
     }
 
@@ -201,6 +218,10 @@ void runUnitTests() {
 
     Vehicle v(alpha);
     assert(v.getAvgFlightTime() == 0 && "Initial flight time should be 0");
+
+    // Test charging logic
+    v.charge(0.6);
+    assert(abs(v.getAvgChargeTime() - 0.6) < 0.001 && "Charging time incorrect");
 
     cout << "Basic unit tests passed\n";
 }
