@@ -219,6 +219,10 @@ void runUnitTests() {
     Vehicle v(alpha);
     assert(v.getAvgFlightTime() == 0 && "Initial flight time should be 0");
 
+    // Test charging logic
+    v.charge(0.6);
+    assert(abs(v.getAvgChargeTime() - 0.6) < 0.001 && "Charging time incorrect");
+
     cout << "Basic unit tests passed\n";
 }
 
