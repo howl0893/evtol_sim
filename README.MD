@@ -73,41 +73,40 @@ make
 
 ## Sample output explanation
 ```
-matthew@flopt:~/dev/sandbox/c++/evtol_sim/build$ ./evtol_sim
 Basic unit tests passed
 
-Alpha (3 vehicles):
-Avg Flight Time: 0.292222 hours
-Avg Distance: 35.0667 miles
-Avg Charge Time: 0.506667 hours
-Total Faults: 3
-Total Passenger Miles: 12624
+Alpha (2 vehicles):
+Avg Flight Time: 0.116111 hours
+Avg Distance: 13.9333 miles
+Avg Charge Time: 0.275 hours
+Total Faults: 0
+Total Passenger Miles: 3344
 
 Bravo (7 vehicles):
-Avg Flight Time: 0.098254 hours
-Avg Distance: 9.8254 miles
-Avg Charge Time: 0.466667 hours
+Avg Flight Time: 0.0349206 hours
+Avg Distance: 3.49206 miles
+Avg Charge Time: 0.128571 hours
 Total Faults: 0
-Total Passenger Miles: 10316.7
+Total Passenger Miles: 3666.67
 
-Charlie (6 vehicles):
-Avg Flight Time: 0.06875 hours
-Avg Distance: 11 miles
-Avg Charge Time: 0.483333 hours
+Charlie (4 vehicles):
+Avg Flight Time: 0.0416667 hours
+Avg Distance: 6.66667 miles
+Avg Charge Time: 0.625 hours
 Total Faults: 0
-Total Passenger Miles: 5940
+Total Passenger Miles: 2400
 
-Delta (3 vehicles):
-Avg Flight Time: 0.298889 hours
-Avg Distance: 26.9 miles
-Avg Charge Time: 0.56 hours
-Total Faults: 1
-Total Passenger Miles: 4842
+Delta (6 vehicles):
+Avg Flight Time: 0.130556 hours
+Avg Distance: 11.75 miles
+Avg Charge Time: 0.391667 hours
+Total Faults: 2
+Total Passenger Miles: 4230
 
 Echo (1 vehicles):
-Avg Flight Time: 0.114943 hours
-Avg Distance: 3.44828 miles
-Avg Charge Time: 0.733333 hours
+Avg Flight Time: 0.0287356 hours
+Avg Distance: 0.862069 miles
+Avg Charge Time: 0.6 hours
 Total Faults: 0
-Total Passenger Miles: 206.897
+Total Passenger Miles: 51.7241
 ```
